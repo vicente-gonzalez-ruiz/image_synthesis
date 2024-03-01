@@ -66,7 +66,7 @@ if test -f "/tmp/$sequence"; then
 else
     echo "Downloading ..."
     # (ulimit -f 112400; wget ...)
-    wget $URL/$sequence --directory-prefix=/tmp
+    wget $URL/$sequence --directory-prefix=/tmp 2> /tmp/extract_frames_output
 fi
 last_frame=$(echo $first_frame + $number_of_frames | bc)
 ffmpeg -i /tmp/$sequence -vf select="between(n\,"$first_frame"\,"$last_frame"),setpts=PTS-STARTPTS" -start_number $first_frame -frames:v $number_of_frames ${output_prefix}%03d.png
